@@ -17,13 +17,13 @@ func TestIntFlag(t *testing.T) {
 	os.Args = append(os.Args, []string{"--required", strconv.FormatInt(testValue, 10)}...)
 
 	// test required flag that we include
-	foo, err := NewIntFlag("required", "should pass", true)
+	foo, err := NewInt64Flag("required", "should pass", true)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	// test flag that is not required and not included
-	_, err = NewIntFlag("optional", "should pass", false)
+	_, err = NewInt64Flag("optional", "should pass", false)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -9,3 +9,8 @@ func missingFlagError(name string) error {
 func Help() {
 
 }
+
+func HelpWithError(err error) {
+	fmt.Println(err)
+	Help()
+}

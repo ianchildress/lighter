@@ -16,7 +16,7 @@ type IntFlag struct {
 	m           sync.Mutex
 }
 
-func NewIntFlag(name, description string, required bool) (*IntFlag, error) {
+func NewInt64Flag(name, description string, required bool) (*IntFlag, error) {
 	f := &IntFlag{
 		name:        name,
 		description: description,
