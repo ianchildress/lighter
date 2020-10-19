@@ -3,8 +3,19 @@ a lightweight cli and launcher
 
 # usage
 The pattern is to create your flags, run Parse, then use your flags. 
+```go
+// create flag
+name, err := NewStringFlag("name", "enter the user's name", true)
 
-The supported flag types are string, bool, and int64. To create a flag use NewStringFlag, NewBoolFlag, and NewInt64Flag.
+// parse flags
+err = lighter.Parse()
+
+// use flag
+fmt.Println("Hi, my name is", name.Value())
+```
+The supported flag types are string, bool, and int64. To create a flag use NewStringFlag(), NewBoolFlag(), 
+and NewInt64Flag() functions.
+
 These functions require the name and description of the flag as well as declaring whether the flag is required or not. 
 Flags that are set as required and are not entered as a command line argument will return an error when parsed. 
 
