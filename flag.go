@@ -1,4 +1,4 @@
-package flags
+package lighter
 
 import (
 	"fmt"

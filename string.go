@@ -1,23 +1,22 @@
-package flags
+package lighter
 
 import (
 	"fmt"
 	"os"
-	"strconv"
 	"sync"
 )
 
-type BoolFlag struct {
+type StringFlag struct {
 	name        string
 	description string
-	value       bool
+	value       string
 	required    bool
 	isSet       bool
 	m           sync.Mutex
 }
 
-func NewBoolFlag(name, description string, required bool) (*BoolFlag, error) {
-	f := &BoolFlag{
+func NewStringFlag(name, description string, required bool) (*StringFlag, error) {
+	f := &StringFlag{
 		name:        name,
 		description: description,
 		required:    required,
@@ -25,41 +24,37 @@ func NewBoolFlag(name, description string, required bool) (*BoolFlag, error) {
 
 	// register flag
 	if err := registerFlag(f); err != nil {
-		return &BoolFlag{}, err
+		return &StringFlag{}, err
 	}
 
 	return f, nil
 }
 
-func (f *BoolFlag) Name() string {
+func (f *StringFlag) Name() string {
 	return f.name
 }
 
-func (f *BoolFlag) Description() string {
+func (f *StringFlag) Description() string {
 	return f.description
 }
 
-func (f *BoolFlag) Value() bool {
+func (f *StringFlag) Value() string {
 	return f.value
 }
 
-func (f *BoolFlag) Required() bool {
+func (f *StringFlag) Required() bool {
 	return f.required
 }
 
-func (f *BoolFlag) IsSet() bool {
+func (f *StringFlag) IsSet() bool {
 	return f.isSet
 }
 
-func (f *BoolFlag) parse() error {
+func (f *StringFlag) parse() error {
 	// iterate over arguments looking for this flag
 	for i := 0; i < len(os.Args)-1; i++ { // skip last item since we are checking for the flag name not the value
 		if os.Args[i] == fmt.Sprintf("--%s", f.name) {
-			b, err := strconv.ParseBool(os.Args[i+1])
-			if err != nil {
-				return fmt.Errorf("bad bool value %s for flag %s", os.Args[i+1], f.name)
-			}
-			f.value = b
+			f.value = os.Args[i+1]
 			f.isSet = true
 			return nil
 		}

@@ -1,29 +1,28 @@
-package flags
+package lighter
 
 import (
 	"os"
-	"strconv"
 	"testing"
 )
 
-func TestIntFlag(t *testing.T) {
-	var testValue int64 = 32
+func TestStringFlag(t *testing.T) {
+	testValue := "bar"
 
 	// reset flags
 	flags = make(map[string]flag)
 	// reset args
 	os.Args = os.Args[:1]
 	// append args for test
-	os.Args = append(os.Args, []string{"--required", strconv.FormatInt(testValue, 10)}...)
+	os.Args = append(os.Args, []string{"--required", testValue}...)
 
 	// test required flag that we include
-	foo, err := NewInt64Flag("required", "should pass", true)
+	foo, err := NewStringFlag("required", "should pass", true)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	// test flag that is not required and not included
-	_, err = NewInt64Flag("optional", "should pass", false)
+	_, err = NewStringFlag("optional", "should pass", false)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -37,13 +36,13 @@ func TestIntFlag(t *testing.T) {
 	}
 }
 
-func TestFailRequiredIntFlag(t *testing.T) {
+func TestFailRequiredStringFlag(t *testing.T) {
 	// reset flags
 	flags = make(map[string]flag)
 	// reset args
 	os.Args = os.Args[:1]
 
-	_, err := NewStringFlag("requiredInt", "should fail", true)
+	_, err := NewStringFlag("requiredString", "should fail", true)
 	if err != nil {
 		t.Fatal(err)
 	}

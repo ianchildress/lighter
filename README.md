@@ -5,7 +5,7 @@ a lightweight cli and launcher
 The pattern is to create your flags, run Parse, then use your flags. 
 ```go
 // create flag
-name, err := NewStringFlag("name", "enter the user's name", true)
+name, err := lighter.NewStringFlag("name", "enter the user's name", true)
 
 // parse flags
 err = lighter.Parse()
@@ -22,7 +22,7 @@ Flags that are set as required and are not entered as a command line argument wi
 # example
 ```go
 // create a required string flag 
-name, err := NewStringFlag("name", "enter the user's name", true)
+name, err := lighter.NewStringFlag("name", "enter the user's name", true)
 if err != nil {
     // display help message
     lighter.HelpWithError(err)
@@ -30,7 +30,7 @@ if err != nil {
 }
 
 // create a required int flag 
-age, err := NewInt64Flag("age", "enter user's age", true)
+age, err := lighter.NewInt64Flag("age", "enter user's age", true)
 if err != nil {
     // display help message
     lighter.HelpWithError(err)
@@ -38,7 +38,7 @@ if err != nil {
 }
 
 // create an optional bool flag 
-admin, err := NewBoolFlag("admin", "set admin privileges", false )
+admin, err := lighter.NewBoolFlag("admin", "set admin privileges", false )
 if err != nil {
     // display help message
     lighter.HelpWithError(err)
@@ -70,7 +70,7 @@ is admin: false
 
 If you want to check if an optional flag was entered, you can use the `IsSet()` method.
 ```go 
-age, err := NewInt64Flag("age", "enter user's age", false)
+age, err := lighter.NewInt64Flag("age", "enter user's age", false)
 checkErr(err)
 
 err = lighter.Parse

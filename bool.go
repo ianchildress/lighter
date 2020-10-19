@@ -1,4 +1,4 @@
-package flags
+package lighter
 
 import (
 	"fmt"
@@ -7,17 +7,17 @@ import (
 	"sync"
 )
 
-type IntFlag struct {
+type BoolFlag struct {
 	name        string
 	description string
-	value       int64
+	value       bool
 	required    bool
 	isSet       bool
 	m           sync.Mutex
 }
 
-func NewInt64Flag(name, description string, required bool) (*IntFlag, error) {
-	f := &IntFlag{
+func NewBoolFlag(name, description string, required bool) (*BoolFlag, error) {
+	f := &BoolFlag{
 		name:        name,
 		description: description,
 		required:    required,
@@ -25,37 +25,37 @@ func NewInt64Flag(name, description string, required bool) (*IntFlag, error) {
 
 	// register flag
 	if err := registerFlag(f); err != nil {
-		return &IntFlag{}, err
+		return &BoolFlag{}, err
 	}
 
 	return f, nil
 }
 
-func (f *IntFlag) Name() string {
+func (f *BoolFlag) Name() string {
 	return f.name
 }
 
-func (f *IntFlag) Description() string {
+func (f *BoolFlag) Description() string {
 	return f.description
 }
 
-func (f *IntFlag) Value() int64 {
+func (f *BoolFlag) Value() bool {
 	return f.value
 }
 
-func (f *IntFlag) Required() bool {
+func (f *BoolFlag) Required() bool {
 	return f.required
 }
 
-func (f *IntFlag) IsSet() bool {
+func (f *BoolFlag) IsSet() bool {
 	return f.isSet
 }
 
-func (f *IntFlag) parse() error {
+func (f *BoolFlag) parse() error {
 	// iterate over arguments looking for this flag
 	for i := 0; i < len(os.Args)-1; i++ { // skip last item since we are checking for the flag name not the value
 		if os.Args[i] == fmt.Sprintf("--%s", f.name) {
-			b, err := strconv.ParseInt(os.Args[i+1], 10, 64)
+			b, err := strconv.ParseBool(os.Args[i+1])
 			if err != nil {
 				return fmt.Errorf("bad bool value %s for flag %s", os.Args[i+1], f.name)
 			}

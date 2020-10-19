@@ -1,4 +1,4 @@
-package flags
+package lighter
 
 func Parse() error {
 	mutex.Lock()
