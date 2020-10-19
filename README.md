@@ -11,7 +11,7 @@ Flags that are set as required and are not entered as a command line argument wi
 # example
 ```go
 // create a required string flag 
-name, err := NewStringFlag("name", "set the user's name", true)
+name, err := NewStringFlag("name", "enter the user's name", true)
 if err != nil {
     // display help message
     lighter.HelpWithError(err)
@@ -19,7 +19,7 @@ if err != nil {
 }
 
 // create a required int flag 
-age, err := NewInt64Flag("age", "set user's age", true)
+age, err := NewInt64Flag("age", "enter user's age", true)
 if err != nil {
     // display help message
     lighter.HelpWithError(err)
@@ -55,4 +55,17 @@ Will result in:
 name: john
 age: 32
 is admin: false
+```
+
+If you want to check if an optional flag was entered, you can use the `IsSet()` method.
+```go 
+age, err := NewInt64Flag("age", "enter user's age", false)
+checkErr(err)
+
+err = lighter.Parse
+checkErr(err)
+
+if age.IsSet() {
+    fmt.Println("The age was set to", age.Value())
+}
 ```
